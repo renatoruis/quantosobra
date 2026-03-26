@@ -8,6 +8,10 @@ import { estimateMonthlyIrsRetention } from './irs'
 
 const IRS_SIGNIFICANT_RATIO = 0.12
 
+function formatEurPlain(v: number): string {
+  return v.toFixed(2).replace('.', ',')
+}
+
 function emptyResult(
   valid: boolean,
   errors: string[],
@@ -136,7 +140,10 @@ O que podes tentar: aumentar tarifa ou dias trabalhados, ou reduzir custos (sal�
 
   if (irsTaxMonthly > baseSalary * IRS_SIGNIFICANT_RATIO && baseSalary > 0) {
     warnings.push(
-      'O IRS estimado é elevado em relação ao salário bruto — verifica escalões e retentions reais.',
+      `O IRS que o simulador estimou (${formatEurPlain(irsTaxMonthly)}/mês) parece alto para um ordenado bruto de ${formatEurPlain(baseSalary)} €. ` +
+      'Isto pode acontecer com ordenados acima de ~1 500 €, onde os escalões de IRS sobem rapidamente. ' +
+      'Este valor é apenas uma estimativa simplificada — o IRS real depende de deduções, ' +
+      'número de dependentes e tabelas de retenção na fonte. Confirma com o contabilista o valor correcto para o teu recibo.',
     )
   }
 
