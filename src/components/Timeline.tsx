@@ -24,18 +24,14 @@ export function Timeline() {
         </li>
         <li>
           <div className="timeline-header">
-            <strong>Pagamento da Segurança Social</strong>
+            <strong>Seg. Social + IRS retido — dia 20</strong>
             <span className="timeline-badge badge-company">Empresa</span>
-            <span className="timeline-badge badge-withheld">Retido</span>
           </div>
-          <span>Até ao <strong>dia 20</strong> do mês seguinte — inclui a parte do empregador (23,75%) e a parte retida ao trabalhador (11%).</span>
-        </li>
-        <li>
-          <div className="timeline-header">
-            <strong>IRS retido na fonte</strong>
-            <span className="timeline-badge badge-withheld">Retido</span>
-          </div>
-          <span>Até ao <strong>dia 20</strong> do mês seguinte — a empresa entrega ao Estado o IRS descontado no recibo.</span>
+          <span>
+            Até ao <strong>dia 20</strong> do mês seguinte — num único prazo, a empresa paga a
+            Segurança Social (23,75% do empregador + 11% retido ao trabalhador) e entrega o IRS
+            descontado no recibo.
+          </span>
         </li>
         <li>
           <div className="timeline-header">
