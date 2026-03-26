@@ -85,6 +85,11 @@ body {
   border-top: 1px solid var(--border);
   font-size: 0.8rem;
   color: var(--text-soft);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.25rem;
 }
 
 .app-footer code {
@@ -977,6 +982,30 @@ body {
 
 .app-footer a:hover {
   text-decoration: underline;
+}
+
+.github-star-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.6rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background: #24292f;
+  color: #fff !important;
+  font-size: 0.84rem;
+  font-weight: 600;
+  text-decoration: none !important;
+  transition: background 0.15s ease;
+}
+
+.github-star-link:hover {
+  background: #1a1e23;
+  text-decoration: none !important;
+}
+
+.github-star-link svg {
+  flex-shrink: 0;
 }
 
 .timeline-list {
