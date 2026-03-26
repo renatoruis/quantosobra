@@ -13,7 +13,7 @@ export function BreakdownTables({ result, names }: Props) {
   return (
     <div className="tables-grid">
       <section className="card table-card table-company">
-        <h3>{names.company}</h3>
+        <h3>Empresa — {names.company}</h3>
         <table className="data-table">
           <tbody>
             <tr>
@@ -54,7 +54,13 @@ export function BreakdownTables({ result, names }: Props) {
               <td>{formatEur(result.accountantVatOnFees)}</td>
             </tr>
             <tr>
-              <td>Total contabilista (com IVA)</td>
+              <td>
+                Total contabilista (com IVA)
+                <span className="row-desc">
+                  {' '}No regime normal, o IVA do contabilista pode ser deduzido na liquidação
+                  trimestral — o custo real tende a ser só o valor sem IVA.
+                </span>
+              </td>
               <td>{formatEur(result.accountantFeeTotal)}</td>
             </tr>
             <tr>
@@ -74,7 +80,7 @@ export function BreakdownTables({ result, names }: Props) {
       </section>
 
       <section className="card table-card table-person">
-        <h3>{names.employee}</h3>
+        <h3>Conta pessoal — {names.employee}</h3>
         <table className="data-table">
           <tbody>
             <tr>
@@ -114,36 +120,53 @@ export function BreakdownTables({ result, names }: Props) {
       </section>
 
       <section className="card table-card table-state">
-        <h3>Impostos e obrigações (mês)</h3>
+        <h3>Estado — impostos e contribuições (mês)</h3>
         <table className="data-table">
+          <thead>
+            <tr>
+              <th colSpan={2} className="table-subheader">A cargo da empresa</th>
+            </tr>
+          </thead>
           <tbody>
             <tr>
               <td>IVA (23% sobre facturação)</td>
               <td>{formatEur(result.taxes.vat)}</td>
             </tr>
             <tr>
+              <td>Segurança Social (empregador — 23,75%)</td>
+              <td>{formatEur(result.taxes.employerSs)}</td>
+            </tr>
+            <tr>
               <td>IRC (sobre lucro do período)</td>
               <td>{formatEur(result.taxes.irc)}</td>
             </tr>
             <tr>
-              <td>Segurança Social (empregador + trabalhador)</td>
-              <td>
-                {formatEur(result.taxes.employerSs + result.taxes.employeeSs)}
-              </td>
-            </tr>
-            <tr>
-              <td>IRS (estimativa)</td>
-              <td>{formatEur(result.taxes.irs)}</td>
-            </tr>
-            <tr>
-              <td>Imposto autónomo ajudas</td>
+              <td>Imposto autónomo (5% sobre ajudas)</td>
               <td>{formatEur(result.taxes.allowanceTax)}</td>
+            </tr>
+          </tbody>
+          <thead>
+            <tr>
+              <th colSpan={2} className="table-subheader table-subheader-person">
+                Retido no salário (entregue pela empresa ao Estado)
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Segurança Social (trabalhador — 11%)</td>
+              <td>{formatEur(result.taxes.employeeSs)}</td>
+            </tr>
+            <tr>
+              <td>IRS retido na fonte (estimativa)</td>
+              <td>{formatEur(result.taxes.irs)}</td>
             </tr>
           </tbody>
         </table>
         <p className="disclaimer">
           O IVA paga-se a cada 3 meses e o IRC uma vez por ano — aqui os valores são
-          a estimativa mensal para facilitar a comparação.
+          a estimativa mensal para facilitar a comparação. Os montantes «retidos no salário»
+          são descontados ao trabalhador mas processados e entregues pela empresa.
         </p>
       </section>
     </div>

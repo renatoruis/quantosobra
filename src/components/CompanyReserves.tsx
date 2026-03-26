@@ -41,7 +41,10 @@ export function CompanyReserves({ result, names }: Props) {
           <tr>
             <td>
               <strong>IVA</strong>
-              <span className="row-desc"> Cobrado ao cliente; não é receita da empresa.</span>
+              <span className="row-desc">
+                {' '}Cobrado ao cliente; não é receita da empresa. Na liquidação trimestral pode
+                ser abatido pelo IVA de despesas (ex.: contabilista), reduzindo o valor a entregar.
+              </span>
             </td>
             <td className="num">{formatEur(r.vatSetAside)}</td>
           </tr>

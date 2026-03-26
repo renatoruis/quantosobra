@@ -69,17 +69,27 @@ export function SimuladorPage() {
       <main className="app-main">
         <SimulationForm value={input} onChange={setInput} />
         <Alerts errors={result.errors} warnings={result.warnings} />
+
+        {result.valid && (
+          <div className="domain-legend" aria-label="Legenda de cores">
+            <span className="legend-item legend-company">Empresa</span>
+            <span className="legend-item legend-person">Pessoal</span>
+            <span className="legend-item legend-state">Estado</span>
+            <span className="legend-item legend-client">Cliente</span>
+          </div>
+        )}
+
+        <PersonalOutcome result={result} names={names} />
+        <CompanyReserves result={result} names={names} />
+        <Dashboard result={result} names={names} />
+        <CashFlowDiagram result={result} names={names} />
+        <BreakdownTables result={result} names={names} />
         <AllowanceSuggestion
           input={input}
           valid={result.valid}
           names={names}
           onApplySuggestedAllowance={applySuggestedAllowance}
         />
-        <PersonalOutcome result={result} names={names} />
-        <CompanyReserves result={result} names={names} />
-        <Dashboard result={result} names={names} />
-        <BreakdownTables result={result} names={names} />
-        <CashFlowDiagram result={result} names={names} />
         <Timeline />
       </main>
 

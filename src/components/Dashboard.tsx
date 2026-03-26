@@ -21,10 +21,10 @@ export function Dashboard({ result, names }: Props) {
 
   return (
     <section className="card dashboard">
-      <p className="section-eyebrow">Números em conjunto</p>
+      <p className="section-eyebrow">Empresa + pessoal + Estado</p>
       <h2>Resumo do mês</h2>
       <div className="kpi-grid">
-        <div className="kpi">
+        <div className="kpi kpi-client">
           <span className="kpi-label">Total facturado (com IVA)</span>
           <span className="kpi-value">{formatEur(result.totalInvoiceValue)}</span>
         </div>
@@ -41,13 +41,13 @@ export function Dashboard({ result, names }: Props) {
           <span className="kpi-value">{formatEur(result.totalTaxesSum)}</span>
         </div>
         <div className="kpi">
-          <span className="kpi-label">Taxa efectiva (sobre factura c/ IVA)</span>
+          <span className="kpi-label">% fora do teu bolso (sobre factura c/ IVA)</span>
           <span className="kpi-value">
             {formatPercent(result.effectiveTaxRateOnInvoiceWithVat)}
           </span>
         </div>
         <div className="kpi">
-          <span className="kpi-label">Taxa efectiva (sobre valor sem IVA)</span>
+          <span className="kpi-label">% fora do teu bolso (sobre receita s/ IVA)</span>
           <span className="kpi-value">
             {formatPercent(result.effectiveTaxRateOnRevenueExVat)}
           </span>

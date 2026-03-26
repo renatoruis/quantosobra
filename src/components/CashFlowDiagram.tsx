@@ -18,6 +18,8 @@ export function CashFlowDiagram({ result, names }: Props) {
     result.taxes.irs +
     result.taxes.allowanceTax
 
+  const staysInCompany = result.accountantFeeTotal + result.netProfit
+
   return (
     <section className="card flow-section">
       <p className="section-eyebrow">O caminho do dinheiro</p>
@@ -98,13 +100,32 @@ export function CashFlowDiagram({ result, names }: Props) {
       </div>
 
       <div className="flow-summary-box">
-        <p>
-          <strong>Em resumo:</strong> de cada{' '}
-          <strong>{formatEur(result.totalInvoiceValue)}</strong> que o cliente paga,{' '}
-          <strong>{formatEur(result.totalPersonalIncome)}</strong> chegam à conta pessoal
-          de {names.employeeShort} e{' '}
-          <strong>{formatEur(toState)}</strong> vão para o Estado em impostos e contribuições.
+        <p className="flow-summary-title">
+          <strong>De cada {formatEur(result.totalInvoiceValue)} que o cliente paga:</strong>
         </p>
+        <div className="flow-summary-destinations">
+          <div className="flow-dest flow-dest-person">
+            <span className="flow-dest-dot" />
+            <div>
+              <span className="flow-dest-label">Conta pessoal de {names.employeeShort}</span>
+              <span className="flow-dest-value">{formatEur(result.totalPersonalIncome)}</span>
+            </div>
+          </div>
+          <div className="flow-dest flow-dest-state">
+            <span className="flow-dest-dot" />
+            <div>
+              <span className="flow-dest-label">Estado (impostos e contribuições)</span>
+              <span className="flow-dest-value">{formatEur(toState)}</span>
+            </div>
+          </div>
+          <div className="flow-dest flow-dest-company">
+            <span className="flow-dest-dot" />
+            <div>
+              <span className="flow-dest-label">Fica na empresa (custos + lucro retido)</span>
+              <span className="flow-dest-value">{formatEur(staysInCompany)}</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   )
