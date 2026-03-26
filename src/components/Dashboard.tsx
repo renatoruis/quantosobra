@@ -24,13 +24,17 @@ export function Dashboard({ result, names }: Props) {
       <p className="section-eyebrow">Números em conjunto</p>
       <h2>Resumo do mês</h2>
       <div className="kpi-grid">
+        <div className="kpi">
+          <span className="kpi-label">Total facturado (com IVA)</span>
+          <span className="kpi-value">{formatEur(result.totalInvoiceValue)}</span>
+        </div>
         <div className="kpi highlight">
           <span className="kpi-label">Líquido pessoal de {names.employeeShort}</span>
           <span className="kpi-value">{formatEur(result.totalPersonalIncome)}</span>
         </div>
-        <div className="kpi">
-          <span className="kpi-label">Total facturado (com IVA)</span>
-          <span className="kpi-value">{formatEur(result.totalInvoiceValue)}</span>
+        <div className="kpi kpi-company">
+          <span className="kpi-label">Lucro líquido de {names.companyShort} (após IRC)</span>
+          <span className="kpi-value">{formatEur(result.netProfit)}</span>
         </div>
         <div className="kpi kpi-state">
           <span className="kpi-label">Total de impostos (estimativa mensal)</span>
@@ -47,10 +51,6 @@ export function Dashboard({ result, names }: Props) {
           <span className="kpi-value">
             {formatPercent(result.effectiveTaxRateOnRevenueExVat)}
           </span>
-        </div>
-        <div className="kpi kpi-company">
-          <span className="kpi-label">Lucro líquido de {names.companyShort} (após IRC)</span>
-          <span className="kpi-value">{formatEur(result.netProfit)}</span>
         </div>
       </div>
       <div className="tax-strip">

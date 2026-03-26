@@ -334,9 +334,39 @@ body {
 }
 
 .reserves-table .total-row td {
+  border-top: 2px solid var(--state);
   border-bottom: none;
   padding-top: 0.85rem;
   font-size: 0.95rem;
+}
+
+.reserves-table .profit-row td {
+  border-top: 1px dashed var(--company);
+  padding-top: 0.75rem;
+  color: var(--company);
+}
+
+.reserves-table .profit-row .row-desc {
+  color: var(--text-soft);
+}
+
+.reserves-table .grand-total-row td {
+  border-top: 2px solid var(--text);
+  border-bottom: none;
+  padding-top: 0.85rem;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.profit-hint {
+  margin: 0.75rem 0 0;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  background: var(--company-bg);
+  border-left: 3px solid var(--company);
+  border-radius: 4px;
 }
 
 /* Sugestão ajudas */

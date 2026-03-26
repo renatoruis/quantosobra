@@ -27,3 +27,4 @@ dist-ssr
 # Project internal docs
 plan.md
 CONTEXT.md
+.vercel

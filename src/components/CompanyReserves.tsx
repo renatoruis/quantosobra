@@ -73,17 +73,45 @@ export function CompanyReserves({ result, names }: Props) {
           </tr>
           <tr className="total-row">
             <td>
-              <strong>Total sugerido a reservar (impostos / contribuições)</strong>
+              <strong>Subtotal impostos / contribuições</strong>
             </td>
             <td className="num">{formatEur(r.totalTaxReserveForCompany)}</td>
           </tr>
+          {result.netProfit > 0.01 && (
+            <>
+              <tr className="profit-row">
+                <td>
+                  <strong>Lucro líquido (após IRC)</strong>
+                  <span className="row-desc">
+                    {' '}Dinheiro que sobra na empresa depois de pagar tudo. Não é para gastar como
+                    pessoa — fica na conta da empresa como poupança ou reserva.
+                  </span>
+                </td>
+                <td className="num">{formatEur(result.netProfit)}</td>
+              </tr>
+              <tr className="grand-total-row">
+                <td>
+                  <strong>Total a manter na conta da empresa</strong>
+                </td>
+                <td className="num">{formatEur(r.totalTaxReserveForCompany + result.netProfit)}</td>
+              </tr>
+            </>
+          )}
         </tbody>
       </table>
+      {result.netProfit > 0.01 && (
+        <p className="profit-hint">
+          O lucro líquido de <strong>{formatEur(result.netProfit)}</strong> fica na conta de{' '}
+          {names.companyShort}. Este valor não é «dinheiro no bolso» — só podes usá-lo pessoalmente
+          através de distribuição de dividendos (sujeita a tributação adicional) ou reinvestimento
+          na empresa. Se não precisares deste lucro, considera aumentar as ajudas de custo até
+          ao valor sugerido.
+        </p>
+      )}
       <p className="disclaimer">
         O IVA paga-se ao Estado a cada <strong>3 meses</strong> e o IRC uma vez por
         ano — mas convém ir pondo de lado todos os meses para não haver surpresas.
-        O ordenado e o contabilista não aparecem nesta tabela porque são custos operacionais,
-        não impostos. Confirma os prazos exactos com o contabilista.
+        Confirma os prazos exactos com o contabilista.
       </p>
     </section>
   )

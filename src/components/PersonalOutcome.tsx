@@ -34,8 +34,9 @@ export function PersonalOutcome({ result, names }: Props) {
           <span className="split-label">Salário líquido (estimativa)</span>
           <span className="split-value">{formatEur(p.netSalaryToAccount)}</span>
           <span className="split-hint">
-            Já com desconto de Segurança Social ({formatEur(p.withheldEmployeeSs)}) e IRS (
-            {formatEur(p.withheldIrs)}) no recibo.
+            A empresa retém no recibo: Seg. Social ({formatEur(p.withheldEmployeeSs)}) e IRS (
+            {formatEur(p.withheldIrs)}). Esses valores nunca chegam à tua conta — a empresa
+            entrega-os directamente ao Estado.
           </span>
         </div>
         <div className="split-box">

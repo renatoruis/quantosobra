@@ -82,12 +82,18 @@ export function BreakdownTables({ result, names }: Props) {
               <td>{formatEur(result.baseSalary)}</td>
             </tr>
             <tr>
-              <td>Segurança Social (11%)</td>
-              <td>{formatEur(result.employeeSs)}</td>
+              <td>
+                Segurança Social (11%)
+                <span className="row-desc"> Retida pela empresa no recibo — nunca chega à conta pessoal.</span>
+              </td>
+              <td>−{formatEur(result.employeeSs)}</td>
             </tr>
             <tr>
-              <td>IRS retido (estimativa mensal)</td>
-              <td>{formatEur(result.irsTaxMonthly)}</td>
+              <td>
+                IRS retido (estimativa mensal)
+                <span className="row-desc"> Retido pela empresa e entregue ao Estado.</span>
+              </td>
+              <td>−{formatEur(result.irsTaxMonthly)}</td>
             </tr>
             <tr>
               <td>Ajudas de custo recebidas</td>
