@@ -1,5 +1,6 @@
 import type { SimulationInput } from '../engine/types'
 import { MIN_BASE_SALARY } from '../engine/types'
+import { PrivacyModal } from './PrivacyModal'
 
 type Props = {
   value: SimulationInput
@@ -103,6 +104,7 @@ export function SimulationForm({ value, onChange }: Props) {
           </label>
         </div>
       </details>
+      <PrivacyModal />
     </section>
   )
 }
