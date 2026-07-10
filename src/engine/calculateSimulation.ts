@@ -131,19 +131,14 @@ export function calculateSimulation(input: SimulationInput): SimulationResult {
       : 0
 
   if (profitBeforeTax < 0) {
-    warnings.push(`Atenção: a facturação deste mês (valor sem IVA) é inferior ao total de custos da empresa.
-
-Em termos simples: o que a empresa paga ou regista como custo (salário bruto, Segurança Social do empregador, contabilista, ajudas de custo e imposto autónomo sobre ajudas…) é mais do que o que entra pela prestação de serviços, antes do IVA. Por isso o resultado é negativo antes do imposto sobre o lucro das sociedades (IRC) — na prática, neste cenário a actividade não cobre as despesas.
-
-O que podes tentar: aumentar tarifa ou dias trabalhados, ou reduzir custos (salário, ajudas, honorários), sempre alinhado com o teu contabilista.`)
+    warnings.push(
+      'A faturação deste mês (sem IVA) não cobre os custos da empresa — aumenta a tarifa ou os dias, ou reduz custos.',
+    )
   }
 
   if (irsTaxMonthly > baseSalary * IRS_SIGNIFICANT_RATIO && baseSalary > 0) {
     warnings.push(
-      `O IRS que o simulador estimou (${formatEurPlain(irsTaxMonthly)}/mês) parece alto para um ordenado bruto de ${formatEurPlain(baseSalary)} €. ` +
-      'Isto pode acontecer com ordenados acima de ~1 500 €, onde os escalões de IRS sobem rapidamente. ' +
-      'Este valor é apenas uma estimativa simplificada — o IRS real depende de deduções, ' +
-      'número de dependentes e tabelas de retenção na fonte. Confirma com o contabilista o valor correcto para o teu recibo.',
+      `O IRS estimado (${formatEurPlain(irsTaxMonthly)} €/mês) é uma aproximação simplificada — o valor real depende de deduções e dependentes; confirma com o contabilista.`,
     )
   }
 

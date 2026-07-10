@@ -1,15 +1,16 @@
 import { useCallback, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { calculateSimulation } from '../engine/calculateSimulation'
+import { buildRiskProfiles, type RiskProfile, type RiskProfileId } from '../engine/riskProfiles'
 import type { SimulationInput } from '../engine/types'
 import { MIN_BASE_SALARY } from '../engine/types'
-import { displayNames } from '../format'
+import { displayNames, formatEur } from '../format'
 import { SimulationForm } from '../components/SimulationForm'
-import { PersonalOutcome } from '../components/PersonalOutcome'
-import { CompanyReserves } from '../components/CompanyReserves'
-import { AllowanceSuggestion } from '../components/AllowanceSuggestion'
-import { Dashboard } from '../components/Dashboard'
+import { ResultHero } from '../components/ResultHero'
+import { RiskProfileSelector } from '../components/RiskProfileSelector'
+import { DetailsTabs } from '../components/DetailsTabs'
 import { BreakdownTables } from '../components/BreakdownTables'
+import { EmploymentComparison } from '../components/EmploymentComparison'
 import { CashFlowDiagram } from '../components/CashFlowDiagram'
 import { Timeline } from '../components/Timeline'
 import { Alerts } from '../components/Alerts'
@@ -17,8 +18,8 @@ import { SiteHeader } from '../components/SiteHeader'
 import { SiteFooter } from '../components/SiteFooter'
 
 const defaultInput: SimulationInput = {
-  companyName: 'Empresa X',
-  employeeName: 'Fulano',
+  companyName: '',
+  employeeName: '',
   dailyRate: 175,
   workingDays: 20,
   baseSalary: MIN_BASE_SALARY,
@@ -31,66 +32,74 @@ export function SimuladorPage() {
 
   const result = useMemo(() => calculateSimulation(input), [input])
   const names = useMemo(() => displayNames(input), [input])
+  const profiles = useMemo(() => buildRiskProfiles(input), [input])
 
-  const applySuggestedAllowance = useCallback((value: number) => {
-    setInput((prev) => ({ ...prev, expenseAllowance: value }))
+  const selectedProfileId: RiskProfileId | 'custom' =
+    profiles.find((p) => Math.abs(p.totalAllowance - input.expenseAllowance) < 0.01)?.id ??
+    'custom'
+
+  const applyProfile = useCallback((profile: RiskProfile) => {
+    setInput((prev) => ({ ...prev, expenseAllowance: profile.totalAllowance }))
   }, [])
 
   return (
     <div className="app-shell">
       <SiteHeader />
 
-      <div className="hero-block card hero-card">
-        <h1 className="hero-title">Quanto sobra para ti ao fim do mês?</h1>
-        <ul className="hero-bullets">
-          <li>
-            <strong>O que é:</strong> um simulador para profissionais de TI (developers,
-            DevOps, tech leads...) que trabalham por empresa B2B em Portugal e querem
-            perceber <strong>quanto chega à conta pessoal</strong> depois de impostos.
-          </li>
-          <li>
-            <strong>Para quem:</strong> especialmente para quem veio do estrangeiro
-            (ex.: Brasil) e precisa de abrir empresa para facturar ao cliente — o
-            equivalente ao «PJ» em Portugal.
-          </li>
-          <li>
-            <strong>O que obténs:</strong> o valor líquido na tua conta, quanto guardar
-            para impostos e uma sugestão de ajudas de custo para pagar o mínimo
-            de impostos <strong>dentro da lei</strong>.
-          </li>
-        </ul>
-        <p className="hero-more">
-          <Link to="/contexto" className="hero-link">
-            Sabe mais: como funciona e quais as limitações →
-          </Link>
-        </p>
-      </div>
+      <p className="tagline">
+        Faturas a uma consultoria em Portugal pela tua empresa pessoal (B2B)? Vê quanto
+        chega mesmo à tua conta de pessoa física — e como pagar menos impostos com
+        ajudas de custo e kms.{' '}
+        <Link to="/contexto" className="tagline-link">Como funciona →</Link>
+      </p>
 
-      <main className="app-main">
-        <SimulationForm value={input} onChange={setInput} />
-        <Alerts errors={result.errors} warnings={result.warnings} />
+      {result.valid && (
+        <div className="result-mini" aria-hidden>
+          <span>Na tua conta:</span> <strong>{formatEur(result.totalPersonalIncome)}</strong> /mês
+        </div>
+      )}
 
-        {result.valid && (
-          <div className="domain-legend" aria-label="Legenda de cores">
-            <span className="legend-item legend-company">Empresa</span>
-            <span className="legend-item legend-person">Pessoal</span>
-            <span className="legend-item legend-state">Estado</span>
-            <span className="legend-item legend-client">Cliente</span>
-          </div>
-        )}
-
-        <PersonalOutcome result={result} names={names} />
-        <CompanyReserves result={result} names={names} />
-        <Dashboard result={result} names={names} />
-        <CashFlowDiagram result={result} names={names} />
-        <BreakdownTables result={result} names={names} />
-        <AllowanceSuggestion
-          input={input}
-          valid={result.valid}
-          names={names}
-          onApplySuggestedAllowance={applySuggestedAllowance}
-        />
-        <Timeline />
+      <main className="simulador-layout">
+        <div className="simulador-left">
+          <SimulationForm value={input} onChange={setInput} />
+          <Alerts errors={result.errors} warnings={result.warnings} />
+          {result.valid && (
+            <RiskProfileSelector
+              profiles={profiles}
+              selectedId={selectedProfileId}
+              onSelect={applyProfile}
+            />
+          )}
+          {result.valid && (
+            <DetailsTabs
+              tabs={[
+                {
+                  id: 'fluxo',
+                  label: 'Fluxo do dinheiro',
+                  content: <CashFlowDiagram result={result} names={names} />,
+                },
+                {
+                  id: 'detalhe',
+                  label: 'Detalhe',
+                  content: <BreakdownTables result={result} names={names} />,
+                },
+                {
+                  id: 'contrato',
+                  label: 'Vs. contrato sem termo',
+                  content: <EmploymentComparison input={input} result={result} />,
+                },
+                {
+                  id: 'calendario',
+                  label: 'Calendário fiscal',
+                  content: <Timeline />,
+                },
+              ]}
+            />
+          )}
+        </div>
+        <div className="simulador-right">
+          <ResultHero result={result} names={names} />
+        </div>
       </main>
 
       <SiteFooter />

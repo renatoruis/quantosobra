@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
 import { SiteHeader } from '../components/SiteHeader'
 import { SiteFooter } from '../components/SiteFooter'
+import { ALLOWANCE_LIMITS, ALLOWANCE_LIMITS_YEAR } from '../engine/allowanceLimits'
+import { formatEur } from '../format'
 
 export function ContextoPage() {
   return (
@@ -22,7 +24,7 @@ export function ContextoPage() {
           <h2>Para quem é</h2>
           <p>
             Se tens uma <strong>empresa em Portugal</strong> (normalmente uma unipessoal ou
-            sociedade em que és o único sócio e trabalhador) e facturas serviços a um cliente,
+            sociedade em que és o único sócio e trabalhador) e facturas serviços a uma consultoria,
             este simulador é para ti.
           </p>
           <p>
@@ -65,7 +67,7 @@ export function ContextoPage() {
             <div className="contexto-step">
               <span className="contexto-step-num">1</span>
               <div>
-                <h3>Quanto facturas ao cliente</h3>
+                <h3>Quanto facturas à consultoria</h3>
                 <p>
                   O simulador multiplica a <strong>tarifa diária</strong> pelos{' '}
                   <strong>dias trabalhados</strong> para calcular a receita mensal.
@@ -141,17 +143,58 @@ export function ContextoPage() {
           <p>Isto evita surpresas na altura de pagar impostos.</p>
         </section>
 
-        <section className="card contexto-card">
+        <section className="card contexto-card contexto-card-full">
           <span className="contexto-card-num" style={{ background: 'var(--accent)' }}>+</span>
-          <h2>Ajudas de custo</h2>
+          <h2>Ajudas de custo, kms e os perfis de risco</h2>
           <p>
-            Cada euro de ajudas de custo é mais 1 € na tua conta pessoal, mas custa
-            1,05 € à empresa (por causa do imposto de 5%).
+            Ajudas de custo e kms entram na tua conta pessoal <strong>sem IRS nem
+            Segurança Social</strong> — desde que fiquem dentro dos limites de isenção
+            e correspondam a deslocações reais e documentadas (mapa de itinerário /
+            boletim de deslocação). Cada euro de ajudas custa 1,05 € à empresa, porque
+            há um imposto autónomo de 5% sobre ajudas não faturadas à consultoria — o
+            simulador aplica sempre esses 5%, a hipótese mais conservadora.
           </p>
+          <h3>Limites isentos em {ALLOWANCE_LIMITS_YEAR}</h3>
+          <ul>
+            <li>
+              <strong>Kms em viatura própria</strong> — {formatEur(ALLOWANCE_LIMITS.kmOwnVehicle)}/km.
+            </li>
+            <li>
+              <strong>Ajuda de custo diária (nacional)</strong> —{' '}
+              {formatEur(ALLOWANCE_LIMITS.dailyNational)}/dia, para deslocações a mais de
+              20 km do domicílio.
+            </li>
+            <li>
+              <strong>Ajuda de custo diária (estrangeiro)</strong> —{' '}
+              {formatEur(ALLOWANCE_LIMITS.dailyInternational)}/dia.
+            </li>
+            <li>
+              <strong>Subsídio de refeição</strong> — {formatEur(ALLOWANCE_LIMITS.mealCash)}/dia
+              em dinheiro ou {formatEur(ALLOWANCE_LIMITS.mealCard)}/dia em cartão refeição.
+              Não acumula com a ajuda de custo diária no mesmo dia.
+            </li>
+          </ul>
+          <h3>Os três perfis do simulador</h3>
+          <ul>
+            <li>
+              <strong>Conservador</strong> — kms realistas (casa↔consultoria) e
+              poucas deslocações, tudo fácil de justificar. Risco fiscal mínimo.
+            </li>
+            <li>
+              <strong>Moderado</strong> — usa os limites isentos no máximo plausível.
+              Continua legal, mas exige documentação consistente todos os meses.
+            </li>
+            <li>
+              <strong>Agressivo</strong> — o máximo que a margem da empresa permite. A
+              parte acima dos limites isentos é sinalizada: se a Autoridade Tributária a
+              requalificar, paga IRS e Segurança Social como se fosse salário (mais
+              eventuais coimas e juros).
+            </li>
+          </ul>
           <p>
-            O simulador calcula o <strong>valor máximo de ajudas</strong> que a empresa
-            pode pagar sem ficar com prejuízo. Na vida real, as ajudas devem corresponder
-            a <strong>despesas efectivas</strong> — confirma sempre com o contabilista.
+            Em qualquer perfil, o valor final é uma <strong>decisão tua com o teu
+            contabilista</strong> — o simulador mostra o impacto, não substitui o
+            enquadramento profissional.
           </p>
         </section>
 
@@ -164,7 +207,7 @@ export function ContextoPage() {
           </p>
           <ul>
             <li>
-              <strong>Sobre a factura com IVA</strong> — de tudo o que o cliente paga, que
+              <strong>Sobre a factura com IVA</strong> — de tudo o que a consultoria paga, que
               percentagem não chega à tua conta.
             </li>
             <li>

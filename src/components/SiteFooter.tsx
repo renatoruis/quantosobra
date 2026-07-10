@@ -1,11 +1,14 @@
 import { Link } from 'react-router-dom'
+import { ALLOWANCE_LIMITS_YEAR } from '../engine/allowanceLimits'
 
 export function SiteFooter() {
   return (
     <footer className="app-footer site-footer">
       <p>
-        Os valores apresentados são estimativas para planeamento — não substituem
-        o contabilista nem declarações oficiais.{' '}
+        Valores estimados para planeamento — não substituem o contabilista nem
+        declarações oficiais. Ajudas de custo e kms devem corresponder a deslocações
+        reais e documentadas; limites isentos de {ALLOWANCE_LIMITS_YEAR}. Nada é
+        guardado — tudo corre no teu navegador.{' '}
         <Link to="/contexto">Sabe mais sobre como funciona</Link>.
       </p>
       <a

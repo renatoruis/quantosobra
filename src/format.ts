@@ -30,9 +30,9 @@ export function displayNames(input: {
   companyName: string
   employeeName: string
 }): DisplayNames {
-  const company = input.companyName.trim() || 'A empresa'
-  const employee = input.employeeName.trim() || 'O trabalhador'
-  const companyShort = input.companyName.trim() || 'empresa'
-  const employeeShort = input.employeeName.trim() || 'trabalhador'
+  const company = input.companyName.trim() || 'Empresa pessoal (B2B)'
+  const employee = input.employeeName.trim() || 'Pessoa física'
+  const companyShort = input.companyName.trim() || 'empresa pessoal'
+  const employeeShort = input.employeeName.trim() || 'pessoa física'
   return { company, employee, companyShort, employeeShort }
 }

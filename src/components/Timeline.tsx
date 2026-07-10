@@ -1,36 +1,30 @@
 export function Timeline() {
   return (
     <section className="card timeline-section">
-      <p className="section-eyebrow">Calendário fiscal</p>
-      <h2>Obrigações da empresa e retenções do salário</h2>
-      <p className="section-lead">
-        Datas baseadas no calendário fiscal oficial da Autoridade Tributária e Segurança Social.
-        Alguns prazos podem variar ligeiramente (fins de semana e feriados).
-      </p>
+      <h2>Calendário fiscal — quando se paga o quê</h2>
       <ul className="timeline-list">
         <li>
           <div className="timeline-header">
-            <strong>Salário ao trabalhador</strong>
+            <strong>Salário à pessoa física</strong>
             <span className="timeline-badge badge-company">Empresa</span>
           </div>
-          <span>Todos os meses — processado no último dia útil do mês (ou data definida no contrato).</span>
+          <span>Todos os meses — último dia útil (ou data do contrato).</span>
         </li>
         <li>
           <div className="timeline-header">
             <strong>Declaração de remunerações (Seg. Social)</strong>
             <span className="timeline-badge badge-company">Empresa</span>
           </div>
-          <span>Até ao <strong>dia 10</strong> do mês seguinte — comunicar à Segurança Social as remunerações pagas.</span>
+          <span>Até ao <strong>dia 10</strong> do mês seguinte.</span>
         </li>
         <li>
           <div className="timeline-header">
-            <strong>Seg. Social + IRS retido — dia 20</strong>
+            <strong>Seg. Social + IRS retido</strong>
             <span className="timeline-badge badge-company">Empresa</span>
           </div>
           <span>
-            Até ao <strong>dia 20</strong> do mês seguinte — num único prazo, a empresa paga a
-            Segurança Social (23,75% do empregador + 11% retido ao trabalhador) e entrega o IRS
-            descontado no recibo.
+            Até ao <strong>dia 20</strong> do mês seguinte — Seg. Social (23,75% + 11%)
+            e IRS descontado no recibo, num único prazo.
           </span>
         </li>
         <li>
@@ -39,19 +33,16 @@ export function Timeline() {
             <span className="timeline-badge badge-company">Empresa</span>
           </div>
           <span>
-            Declaração e pagamento <strong>4 vezes por ano</strong>:{' '}
-            até <strong>20 fev</strong> (4.º trim.),{' '}
-            <strong>20 mai</strong> (1.º trim.),{' '}
-            <strong>22 set</strong> (2.º trim.) e{' '}
-            <strong>20 nov</strong> (3.º trim.).
+            4 vezes por ano: até <strong>20 fev</strong>, <strong>20 mai</strong>,{' '}
+            <strong>22 set</strong> e <strong>20 nov</strong>.
           </span>
         </li>
         <li>
           <div className="timeline-header">
-            <strong>IRC — declaração anual (Modelo 22)</strong>
+            <strong>IRC — Modelo 22</strong>
             <span className="timeline-badge badge-company">Empresa</span>
           </div>
-          <span>Até ao <strong>31 de maio</strong> do ano seguinte — entregar a declaração de IRC e pagar o imposto apurado.</span>
+          <span>Até <strong>31 de maio</strong> do ano seguinte.</span>
         </li>
         <li>
           <div className="timeline-header">
@@ -59,17 +50,11 @@ export function Timeline() {
             <span className="timeline-badge badge-company">Empresa</span>
           </div>
           <span>
-            Três prestações: até <strong>31 jul</strong>,{' '}
-            <strong>30 set</strong> e <strong>15 dez</strong>.
-            Valores com base no IRC do ano anterior.
+            Até <strong>31 jul</strong>, <strong>30 set</strong> e <strong>15 dez</strong>,
+            com base no IRC do ano anterior.
           </span>
         </li>
       </ul>
-      <p className="disclaimer">
-        Datas de referência baseadas no calendário fiscal oficial. «Retido» significa
-        que o valor é descontado ao trabalhador mas processado e entregue pela empresa.
-        Confirma sempre com o contabilista.
-      </p>
     </section>
   )
 }
